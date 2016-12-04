@@ -3,9 +3,6 @@ from random import randint
 import cmath
 import math
 
-singates = ["Hadamard":hadop, "X":xop, "Z":zop, "Y":yop, "sqrtX":sqrtxop,"phase shift":phaseshiftop,"measurement":measurement,"custom":customop, "control":control, "target":target]
-twgates = ["cNOT", "swap"]
-thrgates = ["Toffoli"]
 qubits = float(input("How many qubits would you like to use? (Currently, only supports 1): "))
 done = "n"
 done2 = "n"
@@ -20,10 +17,6 @@ else:
     print("I'm sorry, that is not a valid input. State set to zero.")
     qstat = np.array([0,1])
     qstat2 = np.array([0,1])
-
-print(singates.keys())
-print(twgates)
-print(thrgates)
 
 def hadop(qstat):
     matrix = (1/cmath.sqrt(2))*np.array([[1,1],[1,-1]])
@@ -109,6 +102,14 @@ def target(qstat):
         qstat = mem4
     else:
         print("other gates not yet implemented")
+
+singates = ["Hadamard":hadop, "X":xop, "Z":zop, "Y":yop, "sqrtX":sqrtxop,"phase shift":phaseshiftop,"measurement":measurement,"custom":customop, "control":control, "target":target]
+twgates = ["cNOT", "swap"]
+thrgates = ["Toffoli"]
+
+print(singates.keys())
+print(twgates)
+print(thrgates)
 
 while done == "n":
     if qubits == 1:
