@@ -3,7 +3,7 @@ from random import randint
 import cmath
 import math
 
-singates = ["Hadamard", "X", "Z", "Y", "sqrtX","phase shift","measurement","custom"]
+singates = ["Hadamard":hadop, "X":xop, "Z":zop, "Y":yop, "sqrtX":sqrtxop,"phase shift":phaseshiftop,"measurement":probability,"custom":customop]
 twgates = ["cNOT", "swap"]
 thrgates = ["Toffoli"]
 qubits = float(input("How many qubits would you like to use? (Currently, only supports 1): "))
@@ -71,23 +71,10 @@ def probability(qstat, n):
 
 while done == "n":
     if qubits == 1:
-        fstgat = input("what gate would you like to use? use the list of single gates at the top: ")
+        fstgat = input("what g ate would you like to use? use the list of single gates at the top: ")
         if fstgat in singates:
-            if fstgat == "Hadamard":
-                qstat = hadop(qstat)
-                done = input("Done with your circuit? y or n: ")
-            elif fstgat == "X":
-                qstat = xop(qstat)
-                done = input("Done with your circuit? y or n: ")
-            elif fstgat == "Z":
-                qstat = zop(qstat)
-                done = input("Done with your circuit? y or n: ")
-            elif fstgat == "Y":
-                qstat = yop(qstat)
-                done = input("Done with your circuit? y or n: ")
-            elif fstgat == "sqrtX":
-                qstat = sqrtxop(qstat)
-                done = input("Done with your circuit? y or n: ")
+            qstat = singates[fstgat](qstat)
+            done = input("Done with your circuit? y or n: "))
             elif fstgat == "phase shift":
                 phasepos = [math.pi/4, math.pi/2]
                 print(phasepos)
