@@ -81,6 +81,7 @@ def measurement(qstat):
         qstat = np.array([0,1])
     elif prob1 < random:
         qstat = np.array([1,0])
+    return qstat
 
 def control(qstat):
     typegat = input("Which gate is this the control qubit for? See list of two qubit gates at the top.")
@@ -88,6 +89,7 @@ def control(qstat):
         mem1 = qstat
     elif typegat == "swap":
         mem2 = qstat
+    return qstat
 
 def target(qstat):
     typegat2 = input("Which gate is this target qubit for? See list of two qubit gates at the top.")
@@ -102,6 +104,7 @@ def target(qstat):
         qstat = mem4
     else:
         print("other gates not yet implemented")
+    return qstat
 
 singates = {"Hadamard":hadop, "X":xop, "Z":zop, "Y":yop, "sqrtX":sqrtxop,"phase shift":phaseshiftop,"measurement":measurement,"custom":customop, "control":control, "target":target}
 twgates = ["cNOT", "swap"]
