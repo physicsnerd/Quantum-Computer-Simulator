@@ -4,7 +4,6 @@ import cmath
 import math
 
 singates = ["Hadamard":hadop, "X":xop, "Z":zop, "Y":yop, "sqrtX":sqrtxop,"phase shift":phaseshiftop,"measurement":measurement,"custom":customop, "control":control, "target":target]
-lstsingates = ["Hadamard", "X", "Z", "Y", "sqrtX", "phase shift", "measurement", "custom"]
 twgates = ["cNOT", "swap"]
 thrgates = ["Toffoli"]
 qubits = float(input("How many qubits would you like to use? (Currently, only supports 1): "))
@@ -22,7 +21,7 @@ else:
     qstat = np.array([0,1])
     qstat2 = np.array([0,1])
 
-print(lstsingates)
+print(singates.keys())
 print(twgates)
 print(thrgates)
 
