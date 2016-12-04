@@ -2,7 +2,7 @@ import numpy as np
 from random import randint
 import cmath
 import math
-import function
+from function import function
 
 qubits = float(input("How many qubits would you like to use? (Currently, only supports 1): "))
 done = "n"
