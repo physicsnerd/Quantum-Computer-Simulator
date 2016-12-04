@@ -18,7 +18,7 @@ else:
     qstat = np.array([0,1])
     qstat2 = np.array([0,1])
 
-import function.py
+import function
 
 singates = {"Hadamard":hadop, "X":xop, "Z":zop, "Y":yop, "sqrtX":sqrtxop,"phase shift":phaseshiftop,"measurement":measurement,"custom":customop, "control":control, "target":target}
 twgates = ["cNOT", "swap"]
