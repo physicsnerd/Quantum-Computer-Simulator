@@ -1,3 +1,8 @@
+import cmath
+import numpy as np
+import math
+from random import randint
+
 def hadop(qstat):
     matrix = (1/cmath.sqrt(2))*np.array([[1,1],[1,-1]])
     return np.dot(matrix, qstat)
