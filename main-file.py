@@ -2,6 +2,7 @@ import numpy as np
 from random import randint
 import cmath
 import math
+import function
 
 qubits = float(input("How many qubits would you like to use? (Currently, only supports 1): "))
 done = "n"
@@ -17,8 +18,6 @@ else:
     print("I'm sorry, that is not a valid input. State set to zero.")
     qstat = np.array([0,1])
     qstat2 = np.array([0,1])
-
-import function
 
 singates = {"Hadamard":hadop, "X":xop, "Z":zop, "Y":yop, "sqrtX":sqrtxop,"phase shift":phaseshiftop,"measurement":measurement,"custom":customop, "control":control, "target":target}
 twgates = ["cNOT", "swap"]
