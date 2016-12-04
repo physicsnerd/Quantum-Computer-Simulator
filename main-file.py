@@ -41,16 +41,16 @@ def sqrtxop(qstat):
     return np.dot(matrix,qstat)
 
 def phaseshiftop(qstat):
-	phasepos = [math.pi/4, math.pi/2]
-        print(phasepos)
-        x = input("Please pick one of the two phase shifts, 0 for the first, 1 for the second: ")
-        if x == "0":
-            y = phasepos[0]
-        elif x == "1":
-            y = phasepos[1]
-	const1 = cmath.sqrt(-1)*y
-	matrix = np.array([[1,0],[0,math.e**const1]])
-	return np.dot(matrix,qstat)
+    phasepos = [math.pi/4, math.pi/2]
+    print(phasepos)
+    x = input("Please pick one of the two phase shifts, 0 for the first, 1 for the second: ")
+    if x == "0":
+        y = phasepos[0]
+    elif x == "1":
+        y = phasepos[1]
+    const1 = cmath.sqrt(-1)*y
+    matrix = np.array([[1,0],[0,math.e**const1]])
+    return np.dot(matrix,qstat)
 
 def customop(qstat):
     num1 = float(input("Please input a number (no pi, e, etc) for the first number in your matrix (row 1 column 1): "))
@@ -125,7 +125,7 @@ while done == "n":
             fstgat = input("what gate would you like to use for 1st qubit? Use the list of single qubits at the top, plus control or target")
             if fstgat in singates:
                 qstat = singates[fstgat](qstat)
-		done2 = input("Done with your 1st qubit? y or n: ")     
+                done2 = input("Done with your 1st qubit? y or n: ")     
         scndgat = input("what gate would you like to use for 2nd qubit? Use the list of single qubits at the top, plus control or target")
         if scndgat in singates:
             qstat = singates[scndgat](qstat)
