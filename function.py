@@ -3,6 +3,11 @@ import numpy as np
 import math
 from random import randint
 
+mem1 = 1
+mem2 = 1
+mem3 = 1
+mem4 = 1
+
 def hadop(qstat):
     matrix = (1/cmath.sqrt(2))*np.array([[1,1],[1,-1]])
     return np.dot(matrix, qstat)
@@ -64,14 +69,16 @@ def measurement(qstat):
     random = randint(0,1)
     if random <= prob1:
         qstat = np.array([0,1])
+        return qstat
     elif prob1 < random:
         qstat = np.array([1,0])
-    return qstat
+        return qstat
 
 def control(qstat):
     typegat = input("Which gate is this the control qubit for? See list of two qubit gates at the top.")
     if typegat == "cNOT":
         mem1 = qstat
+        return mem1
     elif typegat == "swap":
         mem2 = qstat
     return qstat
@@ -80,13 +87,14 @@ def target(qstat):
     typegat2 = input("Which gate is this target qubit for? See list of two qubit gates at the top.")
     if typegat2 == "cNOT":
         if np.array_equal(mem3, [0,1]) == True:
-            qstat = qstat
+            return qstat
         elif np.array_equal(mem3, [1,0]) == True:
-            qstat = np.dot(qstat,mem3)
+            return np.dot(qstat,mem3)
         else:
             print("superposition...not implemented")
+            return qstat
     elif typegat2 == "swap":
-        qstat = mem4
+        return mem4
     else:
         print("other gates not yet implemented")
-    return qstat
+        return qstat
