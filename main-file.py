@@ -3,7 +3,7 @@ from random import randint
 import cmath
 import math
 
-singates = ["Hadamard":hadop, "X":xop, "Z":zop, "Y":yop, "sqrtX":sqrtxop,"phase shift":phaseshiftop,"measurement":probability,"custom":customop]
+singates = ["Hadamard":hadop, "X":xop, "Z":zop, "Y":yop, "sqrtX":sqrtxop,"phase shift":phaseshiftop,"measurement":measurement,"custom":customop]
 twgates = ["cNOT", "swap"]
 thrgates = ["Toffoli"]
 qubits = float(input("How many qubits would you like to use? (Currently, only supports 1): "))
@@ -47,13 +47,24 @@ def sqrtxop(qstat):
     matrix = np.array([[const1/2,const2/2],[const2/2,const1/2]])
     return np.dot(matrix,qstat)
 
-def phaseshiftop(qstat,x):
-	const1 = cmath.sqrt(-1)*x
+def phaseshiftop(qstat):
+	phasepos = [math.pi/4, math.pi/2]
+        print(phasepos)
+        x = input("Please pick one of the two phase shifts, 0 for the first, 1 for the second: ")
+        if x == "0":
+            y = phasepos[0]
+        elif x == "1":
+            y = phasepos[1]
+	const1 = cmath.sqrt(-1)*y
 	matrix = np.array([[1,0],[0,math.e**const1]])
 	return np.dot(matrix,qstat)
 
-def customop(qstat,n1, n2, n3, n4):
-    matrix = np.array([[n1,n3],[n2,n4]])
+def customop(qstat):
+    num1 = float(input("Please input a number (no pi, e, etc) for the first number in your matrix (row 1 column 1): "))
+    num2 = float(input("Number for matrix - row 1 column 2: "))
+    num3 = float(input("Number for matrix - row 2 column 1: "))
+    num4 = float(input("Number for matrix - row 2 column 2: "))
+    matrix = np.array([[num1,num3],[num2,num4]])
     matrix2 = matrix.conj().T
     result = np.dot(matrix, matrix2)
     identity = np.identity(2)
@@ -69,38 +80,21 @@ def probability(qstat, n):
     elif n == 1:
         return (qstat[1])**2
 
+def measurement(qstat):
+    prob1 = probability(qstat,0)
+    prob2 = probability(qstat,1)
+    random = randint(0,1)
+    if random <= prob1:
+        qstat = np.array([0,1])
+    elif prob1 < random:
+        qstat = np.array([1,0])
+
 while done == "n":
     if qubits == 1:
         fstgat = input("what g ate would you like to use? use the list of single gates at the top: ")
         if fstgat in singates:
             qstat = singates[fstgat](qstat)
-            done = input("Done with your circuit? y or n: "))
-            elif fstgat == "phase shift":
-                phasepos = [math.pi/4, math.pi/2]
-                print(phasepos)
-                x = input("Please pick one of the two phase shifts, 0 for the first, 1 for the second: ")
-                if x == "0":
-                    y = phasepos[0]
-                elif x == "1":
-                    y = phasepos[1]
-                qstat = phaseshiftop(qstat,y)
-                done = input("Done with your circuit? y or n: ")
-            elif fstgat == "measurement":
-                prob1 = probability(qstat,0)
-                prob2 = probability(qstat,1)
-                random = randint(0,1)
-                if random <= prob1:
-                    qstat = np.array([0,1])
-                elif prob1 < random:
-                    qstat = np.array([1,0])
-                done = input("Done with your circuit? y or n: ")
-            elif fstgat == "custom":
-                num1 = float(input("Please input a number (no pi, e, etc) for the first number in your matrix (row 1 column 1): "))
-                num2 = float(input("Number for matrix - row 1 column 2: "))
-                num3 = float(input("Number for matrix - row 2 column 1: "))
-                num4 = float(input("Number for matrix - row 2 column 2: "))
-                qstat = customop(qstat,num1,num2,num3,num4)
-                done = input("Done with your circuit? y or n: ")
+            done = input("Done with your circuit? y or n: ")
         else:
             print("sorry, that gate is not yet implemented. maybe try custom gate.")
             done = "y"
