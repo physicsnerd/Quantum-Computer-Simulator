@@ -103,7 +103,7 @@ def target(qstat):
     else:
         print("other gates not yet implemented")
 
-singates = ["Hadamard":hadop, "X":xop, "Z":zop, "Y":yop, "sqrtX":sqrtxop,"phase shift":phaseshiftop,"measurement":measurement,"custom":customop, "control":control, "target":target]
+singates = {"Hadamard":hadop, "X":xop, "Z":zop, "Y":yop, "sqrtX":sqrtxop,"phase shift":phaseshiftop,"measurement":measurement,"custom":customop, "control":control, "target":target}
 twgates = ["cNOT", "swap"]
 thrgates = ["Toffoli"]
 
