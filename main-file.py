@@ -116,7 +116,7 @@ print(thrgates)
 
 while done == "n":
     if qubits == 1:
-        fstgat = input("what g ate would you like to use? use the list of single gates at the top: ")
+        fstgat = input("what gate would you like to use? use the list of single gates at the top: ")
         if fstgat in singates:
             qstat = singates[fstgat](qstat)
             done = input("Done with your circuit? y or n: ")
