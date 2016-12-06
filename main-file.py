@@ -37,15 +37,26 @@ while done == "n":
             print("sorry, that gate is not yet implemented. maybe try custom gate.")
             done = "y"
     elif qubits >= 2:
+        commands = {}
+        for i in range(1,x+1):
+            commands[i] = []
+            print(commands)
         while done2 == "n":
             fstgat = input("what gate would you like to use for 1st qubit? Use the list of single qubits at the top, plus control or target")
-            if fstgat in singates:
-                qstat = singates[fstgat](qstat)
-                done2 = input("Done with your 1st qubit? y or n: ")
+            commands.append(fstgat)
+            done2 = input("Done with your 1st qubit? y or n: ")
         scndgat = input("what gate would you like to use for 2nd qubit? Use the list of single qubits at the top, plus control or target")
-        if scndgat in singates:
-            qstat = singates[scndgat](qstat)
-            done = input("Done with your circuit? y or n: ")
+        commands.append(scndgat)
+        while x<= qstat:
+            x=1
+            for i in commands[x]:
+                if i in singates:
+                    if i != "target":
+                        qstat = singates[scndgat](qstat)
+                    else:
+                        x+=1
+                else:
+                    print(i," has not yet been implemented. Maybe try the custom gate?")
     else:
         print("sorry, that functionality is not yet implemented")
         done = "y"
