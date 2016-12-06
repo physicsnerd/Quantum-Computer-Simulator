@@ -43,10 +43,11 @@ while done == "n":
             print(commands)
         while done2 == "n":
             fstgat = input("what gate would you like to use for 1st qubit? Use the list of single qubits at the top, plus control or target")
-            commands.append(fstgat)
+            commands[1].append(fstgat)
             done2 = input("Done with your 1st qubit? y or n: ")
         scndgat = input("what gate would you like to use for 2nd qubit? Use the list of single qubits at the top, plus control or target")
-        commands.append(scndgat)
+        commands[2].append(scndgat)
+        done = input("Done with your 2nd qubit? y or n: ")
         while x<= qstat:
             x=1
             for i in commands[x]:
