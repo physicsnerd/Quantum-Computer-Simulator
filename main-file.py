@@ -36,12 +36,12 @@ while done == "n":
         else:
             print("sorry, that gate is not yet implemented. maybe try custom gate.")
             done = "y"
-    elif qubits == 2:
+    elif qubits >= 2:
         while done2 == "n":
             fstgat = input("what gate would you like to use for 1st qubit? Use the list of single qubits at the top, plus control or target")
             if fstgat in singates:
                 qstat = singates[fstgat](qstat)
-                done2 = input("Done with your 1st qubit? y or n: ")     
+                done2 = input("Done with your 1st qubit? y or n: ")
         scndgat = input("what gate would you like to use for 2nd qubit? Use the list of single qubits at the top, plus control or target")
         if scndgat in singates:
             qstat = singates[scndgat](qstat)
