@@ -72,10 +72,11 @@ def measurement(qstat):
 def control(qstat):
     typegat = input("Which gate is this the control qubit for? See list of two qubit gates at the top.")
     if typegat == "cNOT":
-        mem1 = qstat
-        return mem1
+        global mem1 = qstat
     elif typegat == "swap":
-        mem2 = qstat
+        global mem1 = qstat
+    else:
+        print("other gates not yet implemented")
     return qstat
 
 def target(qstat):
@@ -89,7 +90,7 @@ def target(qstat):
             print("superposition...not implemented")
             return qstat
     elif typegat2 == "swap":
-        return mem4
+        return mem1
     else:
         print("other gates not yet implemented")
         return qstat
