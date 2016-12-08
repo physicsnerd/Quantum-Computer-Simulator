@@ -4,7 +4,7 @@ import cmath
 import math
 from function import *
 
-qubits = float(input("How many qubits would you like to use? (Currently, only supports 1): "))
+qubits = int(input("How many qubits would you like to use? (Currently, only supports 1): "))
 done = "n"
 qstatask = input("Would you like your initial qubits to be in the |0> state or |1> state? 0 or 1: ")
 if qstatask == "0":
