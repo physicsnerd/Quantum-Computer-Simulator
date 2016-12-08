@@ -38,16 +38,14 @@ while done == "n":
             done = "y"
     elif qubits >= 2:
         commands = {}
-        for i in range(1,x+1):
+        for i in range(1,qubits+1):
             commands[i] = []
-            print(commands)
-        while done2 == "n":
-            fstgat = input("what gate would you like to use for 1st qubit? Use the list of single qubits at the top, plus control or target")
-            commands[1].append(fstgat)
-            done2 = input("Done with your 1st qubit? y or n: ")
-        scndgat = input("what gate would you like to use for 2nd qubit? Use the list of single qubits at the top, plus control or target")
-        commands[2].append(scndgat)
-        done = input("Done with your 2nd qubit? y or n: ")
+        while done == "n":
+            x=1
+            while x <= qubits:
+                fstgat = input("what gate would you like to use for ",x," qubit? Use the list of single qubits at the top, plus control or target")
+                commands[x].append(fstgat)
+                done = input("Done with your ",x," qubit? y or n: ")
         while x<= qstat:
             x=1
             for i in commands[x]:
