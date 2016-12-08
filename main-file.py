@@ -39,9 +39,9 @@ while done == "n":
         while done == "n":
             x=1
             while x <= qubits:
-                fstgat = input("what gate would you like to use for " + x + " qubit? Use the list of single qubits at the top, plus control or target")
+                fstgat = input("what gate would you like to use for " + str(x) + " qubit? Use the list of single qubits at the top, plus control or target")
                 commands[x].append(fstgat)
-                done = input("Done with your " + x + " qubit? y or n: ")
+                done = input("Done with your " + str(x) + " qubit? y or n: ")
         while x <= qubits:
             x=1
             for i in commands[x]:
@@ -52,11 +52,11 @@ while done == "n":
                         x+=1
                     if i == len(commands[x]):
                         print(" ")
-                        print("your result is" + qstat + "qubit #" + i+1)
-                        print("probability of |0> state is" + probability(qstat,0))
-                        print("probability of |1> state is" + probability(qstat,1))
+                        print("your result is", qstat, "qubit #", i+1)
+                        print("probability of |0> state is", probability(qstat,0))
+                        print("probability of |1> state is", probability(qstat,1))
                 else:
-                    print(i + " has not yet been implemented. Maybe try the custom gate?")
+                    print(i, " has not yet been implemented. Maybe try the custom gate?")
            
     else:
         print("sorry, that functionality is not yet implemented")
