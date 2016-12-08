@@ -75,7 +75,6 @@ def control(qstat):
         global mem1
         mem1 = qstat
     elif typegat == "swap":
-        global mem1 
         mem1 = qstat
     else:
         print("other gates not yet implemented")
