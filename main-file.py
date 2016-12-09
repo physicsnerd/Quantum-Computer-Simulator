@@ -37,14 +37,14 @@ while done == "n":
         for i in range(1,qubits+1):
             commands[i] = []
         x=1
-        while x <= qubits:
+        while x < (qubits+1):
             while done == "n":
                 fstgat = input("what gate would you like to use for " + str(x) + " qubit? Use the list of single qubits at the top, plus control or target")
                 commands[x].append(fstgat)
                 done = input("Done with your " + str(x) + " qubit? y or n: ")
             x+=1
         x=1
-        while x <= qubits:
+        while x < (qubits+1):
             for i in commands[x]:
                 if i in singates:
                     if i != "target" | (i == "target" & mem1 in globals()):
