@@ -43,8 +43,8 @@ while done == "n":
                 commands[x].append(fstgat)
                 done = input("Done with your " + str(x) + " qubit? y or n: ")
             x+=1
+        x=1
         while x <= qubits:
-            x=1
             for i in commands[x]:
                 if i in singates:
                     if i != "target" | (i == "target" & mem1 in globals()):
