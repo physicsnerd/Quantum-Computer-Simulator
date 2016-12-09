@@ -43,6 +43,7 @@ while done == "n":
                 commands[x].append(fstgat)
                 done = input("Done with your " + str(x) + " qubit? y or n: ")
             x+=1
+            done = "n"
         x=1
         while x < (qubits+1):
             for i in commands[x]:
