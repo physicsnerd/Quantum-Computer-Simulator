@@ -48,7 +48,7 @@ while done == "n":
         while x <= qubits:
             for i in commands[x]:
                 if i in singates:
-                    if i != "target" | (i == "target" & mem1 in globals()):
+                    if i != "target" or (i == "target" and mem1 in globals()):
                         qstat = singates[scndgat](qstat)
                     else:
                         x+=1
