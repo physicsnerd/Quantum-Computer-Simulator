@@ -59,6 +59,7 @@ while done == "n":
                         print("probability of |1> state is", probability(qstat,1))
                 else:
                     print(i, " has not yet been implemented. Maybe try the custom gate?")
+                    break
            
     else:
         print("sorry, that functionality is not yet implemented")
