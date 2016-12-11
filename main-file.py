@@ -53,14 +53,14 @@ while done == "n":
                         print("done with a calculation")
                         if index == len(commands[x]):
                             print(" ")
-                            print("your result is", qstat, "qubit #", i+1)
+                            print("your result is", qstat, "qubit #", index+1)
                             print("probability of |0> state is", probability(qstat,0))
                             print("probability of |1> state is", probability(qstat,1))
                             x+=1
                     else:
                         x+=1
                 else:
-                    print(i, " has not yet been implemented. Maybe try the custom gate?")
+                    print(gate, " has not yet been implemented. Maybe try the custom gate?")
                     break
            
     else:
