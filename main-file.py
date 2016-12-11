@@ -8,9 +8,9 @@ qubits = int(input("How many qubits would you like to use? (Currently, only supp
 done = "n"
 qstatask = input("Would you like your initial qubits to be in the |0> state or |1> state? 0 or 1: ")
 if qstatask == "0":
-    qstat = {1:np.array([0,1])}
+    qstat = {key:np.array([0,1]) for key in range(1,qubits+1)}
 elif qstatask == "1":
-    qstat = {1:np.array([1,0])}
+    qstat = {key:np.array([1,0]) for key in range(1,qubits+1)}
 else:
     print("I'm sorry, that is not a valid input. State set to zero.")
     qstat = {1:np.array([0,1])}
