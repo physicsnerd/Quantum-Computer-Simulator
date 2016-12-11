@@ -56,9 +56,8 @@ while done == "n":
                             print("your result is", qstat, "qubit #", index+1)
                             print("probability of |0> state is", probability(qstat,0))
                             print("probability of |1> state is", probability(qstat,1))
-                            qubitnum+=1
                     else:
-                        qubitnum+=1
+                        print("checking for information")
                 else:
                     print(gate, " has not yet been implemented. Maybe try the custom gate?")
                     break
