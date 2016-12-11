@@ -62,7 +62,8 @@ while done == "n":
                     print(gate, " has not yet been implemented. Maybe try the custom gate?")
                     break
                 qubitnum+=1
-        print("Program complete.")      
+        print("Program complete.")
+        done = "y"
     else:
         print("sorry, that functionality is not yet implemented")
         done = "y"
