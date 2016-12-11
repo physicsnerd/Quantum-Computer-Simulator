@@ -59,7 +59,7 @@ while done == "n":
                             print(" ")
                             print("your result is", qstats[index+1], "qubit #", index+1)
                             print("probability of |0> state is", probability(qstats[index+1],0))
-                            print("probability of |1> state is", probability([qstats[index+1],1))
+                            print("probability of |1> state is", probability(qstats[index+1],1))
                     else:
                         print("checking for information")
                 else:
