@@ -49,7 +49,7 @@ while done == "n":
             for index,gate in enumerate(commands[qubitnum]):
                 if gate in singates:
                     if gate != "target" or (gate == "target" and mem1 in globals()):
-                        qstat[index] = singates[gate](qstat)
+                        qstat[index] = singates[gate](qstat[index])
                         print("done with a calculation")
                         if index+1 == len(commands[qubitnum]):
                             print(" ")
