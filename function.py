@@ -54,9 +54,9 @@ def customop(qstat):
 
 def probability(qstat, n):
     if n == 0:
-        return (qstat[0])**2
+        return np.abs((qstat[0]))**2
     elif n == 1:
-        return (qstat[1])**2
+        return np.abs((qstat[1]))**2
 
 def measurement(qstat):
     prob1 = probability(qstat,0)
