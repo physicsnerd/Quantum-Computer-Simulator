@@ -50,6 +50,7 @@ while done == "n":
                 if i in singates:
                     if i != "target" or (i == "target" and mem1 in globals()):
                         qstat = singates[i](qstat)
+                        print("done with a calculation")
                     else:
                         x+=1
                     if i == len(commands[x]):
