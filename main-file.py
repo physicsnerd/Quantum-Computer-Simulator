@@ -51,7 +51,7 @@ while done == "n":
                     if gate != "target" or (gate == "target" and mem1 in globals()):
                         qstat = singates[gate](qstat)
                         print("done with a calculation")
-                        if index == len(commands[qubitnum]):
+                        if index+1 == len(commands[qubitnum]):
                             print(" ")
                             print("your result is", qstat, "qubit #", index+1)
                             print("probability of |0> state is", probability(qstat,0))
@@ -62,7 +62,7 @@ while done == "n":
                     print(gate, " has not yet been implemented. Maybe try the custom gate?")
                     break
                 qubitnum+=1
-           
+        print("Program complete.")      
     else:
         print("sorry, that functionality is not yet implemented")
         done = "y"
