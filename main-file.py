@@ -46,12 +46,12 @@ while done == "n":
             done = "n"
         x=1
         while x <= qubits:
-            for i,k in enumerate(commands[x]):
-                if k in singates:
-                    if k != "target" or (k == "target" and mem1 in globals()):
-                        qstat = singates[k](qstat)
+            for index,gate in enumerate(commands[x]):
+                if gate in singates:
+                    if gate != "target" or (gate == "target" and mem1 in globals()):
+                        qstat = singates[gate](qstat)
                         print("done with a calculation")
-                        if i == len(commands[x]):
+                        if index == len(commands[x]):
                             print(" ")
                             print("your result is", qstat, "qubit #", i+1)
                             print("probability of |0> state is", probability(qstat,0))
