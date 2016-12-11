@@ -49,7 +49,7 @@ while done == "n":
             for i in commands[x]:
                 if i in singates:
                     if i != "target" or (i == "target" and mem1 in globals()):
-                        qstat = singates[scndgat](qstat)
+                        qstat = singates[fstgat](qstat)
                     else:
                         x+=1
                     if i == len(commands[x]):
