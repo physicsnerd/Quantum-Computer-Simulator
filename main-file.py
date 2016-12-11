@@ -8,12 +8,12 @@ qubits = int(input("How many qubits would you like to use? (Currently, only supp
 done = "n"
 qstatask = input("Would you like your initial qubits to be in the |0> state or |1> state? 0 or 1: ")
 if qstatask == "0":
-    qstat = np.array([0,1])
+    qstat = {1:np.array([0,1])}
 elif qstatask == "1":
-    qstat = np.array([1,0])
+    qstat = {1:np.array([1,0])}
 else:
     print("I'm sorry, that is not a valid input. State set to zero.")
-    qstat = np.array([0,1])
+    qstat = {1:np.array([0,1])}
 
 singates = {"Hadamard":hadop, "X":xop, "Z":zop, "Y":yop, "sqrtX":sqrtxop,"phase shift":phaseshiftop,"measurement":measurement,"custom":customop, "control":control, "target":target}
 twgates = ["cNOT", "swap"]
