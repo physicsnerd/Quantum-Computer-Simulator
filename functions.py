@@ -1,28 +1,57 @@
-#set qnum for dimension of matrix, set it so target can be identified
+import cmath
+import numpy as np
+import math
+from random import randint
 
-def hadop(qstat, qnum):
+def gate_scale(gate, ap_qubit):
+    dimensions = math.sqrt(np.size(gate))
+    ap_qubit-=1
+    if 2**qnum == dimensions:
+        return gate
+    else:
+        iterator = 1
+        kron_num = []
+        identity = np.identity(dimensions, np.matrix)
+        while iterator <= dimensions:
+            kron_num.append(identity)
+            iterator+=1
+        kron_num[ap_qubit] = gate
+        kron_iterator = list(range(len(kron_num)))
+        for i in kron_iterator:
+            if i == 0:
+                x = kron_num[i]
+            if i > 0:
+                x = np.kron(x, kron_num[i])
+        return x
+
+def hadop(qstat, ap_qubit):
     matrix = (1/cmath.sqrt(2))*np.array([[1,1],[1,-1]])
+    matrix = gate_scale(matrix, ap_qubit)
     return np.dot(matrix, qstat)
 
-def xop(qstat, qnum):
+def xop(qstat, ap_qubit):
     matrix = np.array([[0,1],[1,0]])
+    matrix = gate_scale(matrix, ap_qubit)
     return np.dot(matrix,qstat)
 
-def zop(qstat, qnum):
+def zop(qstat, ap_qubit):
     matrix = np.array([[1,0],[0,-1]])
+    matrix = gate_scale(matrix, ap_qubit)
     return np.dot(matrix,qstat)
 
-def yop(qstat, qnum):
+def yop(qstat, ap_qubit):
     matrix = np.array([[0, cmath.sqrt(-1)],[-1*cmath.sqrt(-1),0]])
+    matrix = gate_scale(matrix, ap_qubit)
     return np.dot(matrix,qstat)
 
-def sqrtxop(qstat, qnum):
+def sqrtxop(qstat, ap_qubit):
     const1 = 1+cmath.sqrt(1)
     const2 = 1-cmath.sqrt(1)
     matrix = np.array([[const1/2,const2/2],[const2/2,const1/2]])
+    matrix = gate_scale(matrix, ap_qubit)
     return np.dot(matrix,qstat)
 
-def phaseshiftop(qstat, qnum):
+def phaseshiftop(qstat, ap_qubit):
     phasepos = [math.pi/4, math.pi/2]
     print(phasepos)
     x = input("Please pick one of the two phase shifts, 0 for the first, 1 for the second: ")
@@ -32,30 +61,31 @@ def phaseshiftop(qstat, qnum):
         y = phasepos[1]
     const1 = cmath.sqrt(-1)*y
     matrix = np.array([[1,0],[0,math.e**const1]])
+    matrix = gate_scale(matrix, ap_qubit)
     return np.dot(matrix,qstat)
 
-def customop(qstat, qnum):
-    num1 = float(input("Please input a number (no pi, e, etc) for the first number in your matrix (row 1 column 1): "))
-    num2 = float(input("Number for matrix - row 1 column 2: "))
-    num3 = float(input("Number for matrix - row 2 column 1: "))
-    num4 = float(input("Number for matrix - row 2 column 2: "))
-    matrix = np.array([[num1,num3],[num2,num4]])
-    matrix2 = matrix.conj().T
-    result = np.dot(matrix, matrix2)
-    identity = np.identity(2)
-    if np.array_equal(result, identity) == True:
+#use of eval because I want the user to be able to input constants, etc
+def customop(qstat):
+    dimension = eval(input("What are the dimensions of your (square) matrix? Please input a single number: "))
+    ls = [] 
+    for y in range(dimension): 
+        for x in range(dimension): 
+            ls.append(float(input('What value for position ({}, {}): '.format(y+1, x+1))))
+            matrix = np.matrix(np.resize(ls, (dimension, dimension)))
+    #check if matrix is unitary
+    if np.array_equal(np.dot(matrix, matrix.conj().T), np.identity(dimension)) == True:
         return np.dot(matrix, qstat)
     else:
-        print("matrix not unitary, pretending no gate was applied")
+        print("matrix not unitary, pretending none was applied")
         return qstat
 
-def probability(qstat, n, qnum):
+def probability(qstat, n):
     if n == 0:
         return (qstat[0])**2
     elif n == 1:
         return (qstat[1])**2
 
-def measurement(qstat, qnum):
+def measurement(qstat, ap_qubit):
     prob1 = probability(qstat,0)
     prob2 = probability(qstat,1)
     random = randint(0,1)
@@ -64,3 +94,29 @@ def measurement(qstat, qnum):
     elif prob1 < random:
         qstat = np.array([1,0])
     return qstat
+
+qnum = int(input("how many qubits: ")) #size state vector based on num
+qstat = np.matrix([[0],[1]])
+
+gates = {"Hadamard":hadop, "X":xop, "Z":zop, "Y":yop, "sqrtX":sqrtxop,"phase shift":phaseshiftop,"measurement":measurement,"custom":customop}#, "control":control, "target":target
+print(gates.keys())
+
+done = "n"#needs to handle more than 1 qubit
+while done == "n":
+    if qnum == 1:
+        fstgat = input("what gate would you like to use? use the list of gates at the top minus control and target: ")
+        if fstgat in gates:
+            qstat = gates[fstgat](qstat,1)
+            done = input("Done with your circuit? y or n: ")
+        else:
+            print("sorry, that gate is not yet implemented. maybe try custom gate.")
+
+#printing
+x=1
+while x<=qnum:
+    print(" ")
+    print("result for qubit",x, ":")
+    print(qstat)
+    print("probability of |0> state upon measurement is", probability(qstat,0))
+    print("probability of |1> state upon measurement is", probability(qstat,1))
+    x+=1
