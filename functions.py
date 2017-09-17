@@ -79,13 +79,13 @@ def customop(qstat):
         print("matrix not unitary, pretending none was applied")
         return qstat
 
-def probability(qstat, n):
+def probability(qstat, n): #fix to handle larger state vectors (see printing)
     if n == 0:
         return (qstat[0])**2
     elif n == 1:
-        return (qstat[1])**2
+        return (qstat[-1])**2
 
-def measurement(qstat, ap_qubit):
+def measurement(qstat, ap_qubit): #fix to handle larger state vectors
     prob1 = probability(qstat,0)
     prob2 = probability(qstat,1)
     random = randint(0,1)
@@ -95,8 +95,24 @@ def measurement(qstat, ap_qubit):
         qstat = np.array([1,0])
     return qstat
 
-qnum = int(input("how many qubits: ")) #size state vector based on num
-qstat = np.matrix([[0],[1]])
+qnum = int(input("how many qubits: "))
+zero_state = np.matrix([[1],[0]])
+one_state = np.matrix([[0],[1]])
+z_or_o = input('would you like to start in the 0 or 1 state: ')
+iterate = 1
+while iterate <= qnum:
+    if iterate == 1:
+        if z_or_o == '0':
+            x = zero_state
+        elif z_or_o == '1':
+            x = one_state
+    if iterate == qnum:
+        qstat = x
+        print(qstat)
+    else:
+        x = np.kron(x,zero_state)
+    iterate+=1
+    
 
 gates = {"Hadamard":hadop, "X":xop, "Z":zop, "Y":yop, "sqrtX":sqrtxop,"phase shift":phaseshiftop,"measurement":measurement,"custom":customop}#, "control":control, "target":target
 print(gates.keys())
@@ -105,18 +121,23 @@ done = "n"#needs to handle more than 1 qubit
 while done == "n":
     if qnum == 1:
         fstgat = input("what gate would you like to use? use the list of gates at the top minus control and target: ")
+        ap_qubit = int(input("what qubit would you like it to be applied to?"))#handling control/target...
         if fstgat in gates:
-            qstat = gates[fstgat](qstat,1)
+            qstat = gates[fstgat](qstat,ap_qubit)
             done = input("Done with your circuit? y or n: ")
         else:
             print("sorry, that gate is not yet implemented. maybe try custom gate.")
+    else:
+        fstgat = input('what gate would you like to use? (proceed at your own risk): ')
+        ap_qubit = int(input('what qubit would you like that gate to be applied to: '))
+        if fstgat in gates:
+            qstat = gates[fstgat](qstat,ap_qubit)
+            done = input('done with your circuit? y or n: ')
+        else:
+            print('sorry, gate not implemented, maybe try custom gate.')
 
-#printing
-x=1
-while x<=qnum:
-    print(" ")
-    print("result for qubit",x, ":")
-    print(qstat)
-    print("probability of |0> state upon measurement is", probability(qstat,0))
-    print("probability of |1> state upon measurement is", probability(qstat,1))
-    x+=1
+#printing - fix to handle larger state vectors
+print(" ")
+print("final state:", qstat)
+print("probability of |0> state upon measurement is", probability(qstat,0))#this needs to iterate for qubits
+print("probability of |1> state upon measurement is", probability(qstat,1))
