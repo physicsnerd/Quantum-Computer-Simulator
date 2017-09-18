@@ -4,7 +4,7 @@ import math
 from random import randint
 
 def gate_scale(gate, ap_qubit):
-    dimensions = math.sqrt(np.size(gate))
+    dimensions = int(math.sqrt(np.size(gate)))
     ap_qubit-=1
     if 2**qnum == dimensions:
         return gate
@@ -53,7 +53,7 @@ def sqrtxop(qstat, ap_qubit):
 
 def phaseshiftop(qstat, ap_qubit):
     phasepos = [math.pi/4, math.pi/2]
-    print(phasepos)
+    print('pi/4 or pi/2')
     x = input("Please pick one of the two phase shifts, 0 for the first, 1 for the second: ")
     if x == "0":
         y = phasepos[0]
@@ -64,20 +64,31 @@ def phaseshiftop(qstat, ap_qubit):
     matrix = gate_scale(matrix, ap_qubit)
     return np.dot(matrix,qstat)
 
-#use of eval because I want the user to be able to input constants, etc
-def customop(qstat):
+#use of eval because I want the user to be able to input constants, etc - easier way to do this?
+save_gates = {} #add way to access saved gates and save them for another program run
+def customop(qstat, ap_qubit):
     dimension = eval(input("What are the dimensions of your (square) matrix? Please input a single number: "))
-    ls = [] 
+    ls = []
     for y in range(dimension): 
-        for x in range(dimension): 
+        for x in range(dimension):
             ls.append(float(input('What value for position ({}, {}): '.format(y+1, x+1))))
             matrix = np.matrix(np.resize(ls, (dimension, dimension)))
     #check if matrix is unitary
     if np.array_equal(np.dot(matrix, matrix.conj().T), np.identity(dimension)) == True:
+        save = input('would you like to save this gate for future use? y or n: ')
+        if save == 'y':
+            save_name = input('what would you like to save the gate as (a name): ')
+            save_gates[save_name] = matrix
+        matrix = gate_scale(matrix, ap_qubit)
         return np.dot(matrix, qstat)
     else:
         print("matrix not unitary, pretending none was applied")
         return qstat
+
+def cnot(qstat, ap_qubit):
+    matrix = np.array([[1,0,0,0],[0,1,0,0],[0,0,0,1],[0,0,1,0]])
+    matrix = gate_scale(matrix, ap_qubit)
+    return np.dot(matrix,qstat)
 
 def probability(qstat, n): #fix to handle larger state vectors (see printing)
     if n == 0:
@@ -114,14 +125,14 @@ while iterate <= qnum:
     iterate+=1
     
 
-gates = {"Hadamard":hadop, "X":xop, "Z":zop, "Y":yop, "sqrtX":sqrtxop,"phase shift":phaseshiftop,"measurement":measurement,"custom":customop}#, "control":control, "target":target
+gates = {"Hadamard":hadop, "X":xop, "Z":zop, "Y":yop, "sqrtX":sqrtxop,"phase shift":phaseshiftop,"measurement":measurement,"custom":customop, "cnot":cnot}
 print(gates.keys())
 
-done = "n"#needs to handle more than 1 qubit
+done = "n"#needs to handle multi qubit gates
 while done == "n":
     if qnum == 1:
         fstgat = input("what gate would you like to use? use the list of gates at the top minus control and target: ")
-        ap_qubit = int(input("what qubit would you like it to be applied to?"))#handling control/target...
+        ap_qubit = int(input("what qubit would you like it to be applied to?"))
         if fstgat in gates:
             qstat = gates[fstgat](qstat,ap_qubit)
             done = input("Done with your circuit? y or n: ")
@@ -136,8 +147,8 @@ while done == "n":
         else:
             print('sorry, gate not implemented, maybe try custom gate.')
 
-#printing - fix to handle larger state vectors
+#printing - fix the probabilities
 print(" ")
 print("final state:", qstat)
-print("probability of |0> state upon measurement is", probability(qstat,0))#this needs to iterate for qubits
+print("probability of |0> state upon measurement is", probability(qstat,0))
 print("probability of |1> state upon measurement is", probability(qstat,1))
